@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Inclua Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <title>Gerenciador de Músicas</title>
+    <style>
+        /* Adicione estilos personalizados para esconder o formulário inicialmente */
+        #addForm {
+            display: none;
+        }
+
+        /* Adicione um estilo para os cards de música */
+        .music-card {
+            background-color: #e0f7fa;
+            /* Cor de fundo do card */
+            border: 1px solid #26c6da;
+            /* Cor da borda do card */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        /* Adicione um estilo para os botões de editar e deletar */
+        .edit-btn,
+        .delete-btn {
+            margin-top: 5px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1>Gerenciador de Músicas</h1>
+
+        <!-- Símbolo adicionar músicas -->
+        <div class="d-flex justify-content-between mt-3">
+            <a href="#" class="btn btn-outline-success" id="addButton">
+                <i class="fas fa-plus"></i> Adicionar
+            </a>
+        </div>
+
+        <!-- Formulário de adição (inicialmente escondido) -->
+        <div id="addForm" class="mt-3">
+            <form id="addMusicForm">
+                <!-- ARTISTA -->
+                <div class="form-group">
+                    <label for="artista">Artista:</label>
+                    <input type="text" class="form-control" id="artista" name="artista" placeholder="Nome do artista">
+                </div>
+
+                <!-- MUSICA -->
+                <div class="form-group">
+                    <label for="musica">Música:</label>
+                    <input type="text" class="form-control" id="musica" name="musica" placeholder="Nome da música">
+                </div>
+
+                <!-- ALBUM -->
+                <div class="form-group">
+                    <label for="album">Álbum:</label>
+                    <input type="text" class="form-control" id="album" name="album" placeholder="Nome do álbum">
+                </div>
+
+                <!-- GÊNERO -->
+                <div class="form-group">
+                    <label for="genero">Gênero:</label>
+                    <input type="text" class="form-control" id="genero" name="genero" placeholder="Gênero da música">
+                </div>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>
+        </div>
+
+        <!-- Lista de músicas cadastradas -->
+        <div class="mt-3">
+            <h3>Músicas Cadastradas</h3>
+            <div id="musicList"></div>
+        </div>
+
+        <!-- Bootstrap JS (opcional, para recursos interativos do Bootstrap) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+        <script>
+            document.getElementById('addButton').addEventListener('click', function () {
+                document.getElementById('addForm').style.display = 'block';
+            });
+
+            document.getElementById('addMusicForm').addEventListener('submit', function (event) {
+                event.preventDefault(); //previne que a pagina recarregue
+
+                const artista = document.getElementById('artista').value;
+                const album = document.getElementById('album').value;
+                const musica = document.getElementById('musica').value;
+                const genero = document.getElementById('genero').value;
+
+                const isEditing = this.getAttribute('data-editing') === 'true';
+
+                if (isEditing) {
+                    editMusicInList({ artista, musica, album, genero });
+                } else {
+                    addMusicToList({ artista, musica, album, genero });
+                }
+
+                this.reset();
+                this.removeAttribute('data-editing');
+            });
+
+            function getSelectedValue(elementId, novoInputId) {
+                const selectElement = document.getElementById(elementId);
+                const selectedValue = selectElement.value;
+
+                if (selectedValue === 'adicionar') {
+                    return document.getElementById(novoInputId).value;
+                }
+
+                return selectedValue;
+            }
+
+            function addMusicToList(music) {
+                const musicList = document.getElementById('musicList');
+                const musicCard = document.createElement('div');
+                musicCard.classList.add('music-card');
+
+                musicCard.innerHTML = `
+                    <p>Artista: ${music.artista}</p>
+                    <p>Música: ${music.musica}</p>
+                    <p>Álbum: ${music.album}</p>
+                    <p>Gênero: ${music.genero}</p>
+                    <button class="btn btn-info edit-btn" onclick="editMusic(this)">Editar</button>
+                    <button class="btn btn-danger delete-btn" onclick="deleteMusic(this)">Deletar</button>
+                `;
+
+                musicList.appendChild(musicCard);
+            }
+
+            function editMusicInList(music) {
+                const musicList = document.getElementById('musicList');
+                const cards = musicList.getElementsByClassName('music-card');
+
+                for (let i = 0; i < cards.length; i++) {
+                    const card = cards[i];
+                    const cardArtista = card.querySelector('p:nth-child(1)').textContent.replace('Artista: ', '');
+                    const cardMusica = card.querySelector('p:nth-child(2)').textContent.replace('Música: ', '');
+
+                    if (cardArtista === music.artista && cardMusica === music.musica) {
+                        card.querySelector('p:nth-child(1)').textContent = `Artista: ${document.getElementById('artista').value}`;
+                        card.querySelector('p:nth-child(2)').textContent = `Música: ${music.musica}`;
+                        card.querySelector('p:nth-child(3)').textContent = `Álbum: ${document.getElementById('album').value}`;
+                        card.querySelector('p:nth-child(4)').textContent = `Gênero: ${document.getElementById('genero').value}`;
+                        break;
+                    }
+                }
+            }
+
+            function editMusic(button) {
+                const musicCard = button.closest('.music-card');
+                const artista = musicCard.querySelector('p:nth-child(1)').textContent.replace('Artista: ', '');
+                const musica = musicCard.querySelector('p:nth-child(2)').textContent.replace('Música: ', '');
+                const album = musicCard.querySelector('p:nth-child(3)').textContent.replace('Álbum: ', '');
+                const genero = musicCard.querySelector('p:nth-child(4)').textContent.replace('Gênero: ', '');
+
+                document.getElementById('artista').value = artista;
+                document.getElementById('musica').value = musica;
+                document.getElementById('album').value = album;
+                document.getElementById('genero').value = genero;
+
+                document.getElementById('addMusicForm').setAttribute('data-editing', 'true');
+            }
+
+            function deleteMusic(button) {
+                const musicCard = button.closest('.music-card');
+                musicCard.remove();
+            }
+        </script>
+
+    </div>
+</body>
+
+</html>
