@@ -1,0 +1,152 @@
+
+/*==========================
+        3.NAVBAR CUSTOM
+============================*/
+body{
+    background-color: #1A1A1F;
+    color: #fffdfd;
+    font-family: 'Oswald', sans-serif;
+}
+.custom-nav {
+    background-color: transparent;
+    padding: 20px 0px;
+    width: 100%;
+    border-radius: 0px;
+    z-index: 999;
+    margin-bottom: 0px;
+    transition: all 0.5s ease-in-out;
+}
+
+.custom-nav .navbar-nav li a {
+    color: #fff !important;
+    font-size: 15px;
+    background-color: transparent !important;
+    margin: 0 7px;
+    letter-spacing: 0.05em;
+    line-height: 24px;
+    transition: all 0.5s;
+    font-weight: 500;
+}
+
+.custom-nav .navbar-brand {
+    color: #090606 !important;
+    text-transform: uppercase;
+}
+
+.custom-nav .navbar-toggler {
+    color: #fffdfd;
+    font-size: 35px;
+    padding: 0px;
+    margin-left: 10px;
+}
+
+.custom-nav.stickyadd {
+    background-color: #fff !important;
+    box-shadow: 0 1px 8px 3px rgba(0, 0, 0, 0.050980392156862744);
+    padding: 15px 0px;
+}
+
+.custom-nav.stickyadd .navbar-nav li a {
+    color: #000 !important;
+}
+
+
+.bg-overlay {
+    background-color: #fff4f433;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+.header-content {
+    max-width: 800px;
+}
+
+.header-table-center {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.header-table {
+    display: table;
+    width: 100%;
+    height: 60%;
+}
+
+.navbarCollapse {
+    font-size: 54px;
+}
+.header-desc {
+    max-width: 500px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.header-name {
+    font-size: 66px;
+}
+
+
+.header-bg-img {
+    background-image: url(/images/header-bg.jpg);
+    position: relative;
+    background-size: cover;
+    background-position: center ;
+}
+/* CARD */
+.card-body {
+    background-color: #f2f2f251;
+
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: -8px 8px 18px rgba(0, 0, 0, .2);
+    cursor: pointer;
+}
+
+.card {
+    background: white;
+    color: #000;
+    box-shadow: -5px 5px 10px rgba(44, 44, 44, 0.2);
+    transform: scale(1);
+    transition: all 300ms ease-in-out;
+}
+
+@media (min-width: 200px) and (max-width: 768px) {
+    .custom-nav {
+        background-color: #00000056 !important;
+        padding: 10px 0px !important;
+    }
+    .custom-nav .container {
+        width: 85%;
+    }
+    .custom-nav .navbar-toggler {
+        color: #ffffff;
+        font-size: 32px;
+        border: none;
+    }
+    .custom-nav .navbar-nav li a {
+        color: rgba(255, 255, 255, 0.6) !important;
+    }
+    .header-bg-img {
+        clip-path: none;
+        padding: 120px 0 140px;
+    }
+    .h-100vh {
+        height: auto;
+        padding: 120px 0 140px;
+    }
+    .wave-home.h-100vh{
+        height: auto;
+        padding: 120px 0 190px;
+    }
+    .custom-nav .navbar-nav li a {
+        margin: 4 10px;
+        line-height: 15px;
+    }
+    .header-name {
+        font-size: 38px;
+    }
+}
