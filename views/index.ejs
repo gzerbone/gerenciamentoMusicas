@@ -66,26 +66,24 @@
                                     <p class="card-text">Ano de Lançamento: <%= resultCard[i].ano_lancamento %>
                                     </p>
 
-                                        <!-- Botões de Editar e Excluir -->
-                                        <div class="d-flex justify-content-center">
+                                    <!-- Botões de Editar e Excluir -->
+                                    <div class="d-flex justify-content-center">
 
-                                            <!--Botão que precisa acessar o id do card que for clicado-->
-                                            <form action="/editar-album/<%= resultCard[i].id_album %>" method="get"
-                                                style="display:inline;" id="albumForm">
-                                                <input type="hidden" name="id_album"
-                                                    value="<%= resultCard[i].id_album %>" />
-                                                <button type="submit" class="btn btn-warning m-3 " ">
+                                        <!--Botão que precisa acessar o id do card que for clicado-->
+                                        <form action="/editar-album/<%= resultCard[i].id_album %>" method="get"
+                                            style="display:inline;" id="albumForm">
+                                            <input type="hidden" name="id_album"
+                                                value="<%= resultCard[i].id_album %>" />
+                                            <button type="submit" class="btn btn-warning m-3 " ">
                                                 <i class=" fas fa-edit"></i> Editar
-                                                </button>
-                                            </form>
-
-                                            <form action="/excluir-album/<%= resultCard.id_album %>" method="post"
-                                                style="display:inline;">
-                                                <button type="submit" class="btn btn-danger mt-3">
-                                                    <i class="fas fa-trash-alt"></i> Excluir
-                                                </button>
-                                            </form>
-                                        </div>
+                                            </button>
+                                        </form>
+                                        <form action="/excluir-musica/<%= resultCard[i].id_musica %>" method="post" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger mt-3" onclick="return confirm('Tem certeza que deseja excluir esta música?');" >
+                                                <i class="fas fa-trash-alt"></i> Excluir
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -102,6 +100,30 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Adiciona um ouvinte de evento para cada botão de exclusão
+            const deleteButtons = document.querySelectorAll('.delete-button');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Obtém o ID do álbum associado ao botão
+                    const albumId = this.closest('.delete-form').getAttribute('data-album-id');
 
+                    // Envia uma solicitação AJAX para excluir a música
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', `/excluir-musica/${albumId}`, true);
+                    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            // Remove o card da visualização
+                            const card = button.closest('.card-deck');
+                            card.remove();
+                        }
+                    };
+                    xhr.send(JSON.stringify({ albumId }));
+                });
+            });
+        });
+    </script>
 
     </html>

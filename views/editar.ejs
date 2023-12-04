@@ -1,37 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include("Header.ejs"); %>
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Álbum</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/css/style.css" rel="stylesheet">
 
-<body>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- Inclua Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
-    <h1>Editar Álbum</h1>
-    <% for(var i=0; i < dados.length; i++) { %>
+        <title>Editar Álbum</title>
+    </head>
 
-        <form action="/editar-album/<%= dados[i].id_album %>" method="post" id="albumForm" class="container mt-5">            
+    <body>
+        <div class=" container mt-3 " style="width: 28rem;">
+            <h1>Editar Álbum</h1>
+            <% for(var i=0; i < dados.length; i++) { %>
 
-                <label for="titulo_album">Título do Álbum:</label>
-                <input type="text" name="titulo_album" id="album" value="<%= dados[i].titulo_album %>" required>
-                <br>
-                <label for="ano_lancamento">Ano de Lançamento:</label>
-                <input type="text" name="ano_lancamento" id="ano_lancamento" value="<%= dados[i].ano_lancamento %>" required>
-                <br>
-                <label for="artista">Selecione um artista:</label>
-                <select class="form-control" id="artista" name="id_artista">
-                   
-                    <% for(var i=0; i < dados.length; i++) { %>
-                        <option value="<%= dados[i].id_artista %>">
-                            <%= dados[i].nome %>
-                        </option>
-                        <% } %> <% } %>
-                </select>
-                <button type="submit">Salvar Alterações</button>
-        </form>
+                <form action="/editar-album/<%= dados[i].id_album %>" method="post" id="albumForm"
+                    class="forms-card">
+                    <div class="card-body">
+                        <label for="titulo_album">
+                            <h2 class="card-title">
+                                <%= dados[i].titulo %>
+                            </h2>
+                        </label>
 
-</body>
+                        <br>
+                        <label for="titulo_album">Título do Álbum:</label>
+                        <input type="text" name="titulo_album" class="form-control" id="album"
+                            value="<%= dados[i].titulo_album %>" required>
+                        <br>
+                        <label for="ano_lancamento">Lançamento do Álbum:</label>
+                        <input type="text" name="ano_lancamento" class="form-control" id="album"
+                            value="<%= dados[i].ano_lancamento %>" required>
+                        <br>
+                        <label for="artista">Selecione um artista:</label>
+                        <select class="form-control" id="artista" name="id_artista">
+                            <option value="" selected disabled hidden>Escolha um artista</option>
+                            <% for(var i=0; i < todosArtistas.length; i++) { %>
+                                <option value="<%= todosArtistas[i].id_artista %>">
+                                    <%= todosArtistas[i].nome %>
+                                </option>
+                                <% } %>
+                        </select>
+                        <% } %>
+                            <br />
+                            <button class="btn bg-info text-white submit" id="button1" type="submit">Salvar
+                                Alterações</button>
+                            <a href="/" class="btn  text-light">Voltar</a>
+                    </div>
+                </form>
+        </div>
+    </body>
 
-</html>
+    </html>

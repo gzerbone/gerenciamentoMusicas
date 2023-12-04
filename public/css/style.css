@@ -1,12 +1,26 @@
 
-/*==========================
-        3.NAVBAR CUSTOM
-============================*/
+
 body{
     background-color: #1A1A1F;
     color: #fffdfd;
     font-family: 'Oswald', sans-serif;
 }
+/* Adicione estilos para ajustar o tamanho do dropdown */
+
+#button1:hover{
+    background-color: rgb(176, 187, 192)
+}
+.forms-card {
+    background-color: rgb(100, 135, 153);
+    color: #fff;
+    border-radius: 2rem;
+}
+
+
+/*==========================
+        3.NAVBAR CUSTOM
+============================*/
+
 .custom-nav {
     background-color: transparent;
     padding: 20px 0px;

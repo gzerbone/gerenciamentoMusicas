@@ -1,47 +1,50 @@
 <%- include("Header.ejs"); %>
+    <link href="/css/style.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Inclua Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
-        /* Adicione estilos para ajustar o tamanho do dropdown */
-        select {
-            width: 200px;
-            /* Ajuste o valor conforme necessário */
-            padding: 5px;
-            /* Adicione espaço interno conforme necessário */
-        }
+
     </style>
+    <div class=" container mt-3 " style="width: 28rem;">
+        <h1>Adicionar Conteúdo</h1>
 
-    <form action="/salvar-album" method="post" class="container mt-5" id="albumForm">
-        <div class="mt-3">
-            <div class="form-group">
-                <label for="artista">Selecione um artista:</label>
-                <select class="form-control" id="artista" name="id_artista">
-                    <option>Selecione um opção</option>
-                    <% for(var i=0; i < results.length; i++) { %>
-                        <option value="<%= results[i].id_artista %>">
-                            <%= results[i].nome %>
-                        </option>
-                        <% } %>
-                </select>
-                <br />
-                <label for="album">Informe o álbum:</label>
-                <input type="text" class="form-control" id="album" name="titulo_album" required />
-                <br />
-                <button class="btn btn-primary" id="button1" type="submit" onclick="mostrarFormularioMusica()">
-                    Salvar Álbum</button>
-                <a href="/" class="btn btn-outline-primary btn-sm">Voltar</a>
+            <form action="/inserir" method="post" class="forms-card" id="albumForm">
+                <div class="card-body">
+                    <label for="">Selecione um artista:</label>
+                    <select class="form-control" id="artista" name="id_artista" onchange="toggleNomeArtista()">
+                        <option value="" selected disabled hidden>Escolha um artista</option>
+                        <% for(var i=0; i < results.length; i++) { %>
+                            <option value="<%= results[i].id_artista %>">
+                                <%= results[i].nome %>
+                            </option>
+                            <% } %>
+                                <option value="novoArtista">Outro</option>
+                    </select>
+                    <!-- Campo para digitar OUTRO ARTISTA
+                    <label for="nomeArtista" id="nomeArtistaLabel" style="display:none;">Nome do Artista:</label>
+                    <input type="text" name="nome" id="nomeArtista" class="nome-artista form-control"
+                        style="display:none;" required> -->
+                    <br />
 
+                    <label for="">Informe o álbum:</label>
+                    <input type="text" class="form-control"name="titulo_album"
+                        value="<%= results.titulo_album %>" required />
 
-            </div>
-        </div>
-    </form>
+                    <br />
+                    <button class="btn bg-info text-white submit" id="button1" type="submit"
+                        onclick="mostrarFormularioMusica()">
+                        Salvar Álbum</button>
+                    <a href="/" class="btn  text-light">Voltar</a>
 
+                </div>
+            </form>
+    </div>
 
     <!-- Formulário de música (inicialmente escondido) -->
-    <div id="addForm" style="display:none;">
-        <form action="inserir" method="post" class="container mt-5">
-            <div class="form-group">
+    <div id="addForm" style="display:none;" class=" container mt-3 " style="width: 28rem;">
+        <form action="inserir" method="post" class="forms-card">
+            <div class="card-body">
                 <label for="">Musica</label>
                 <input type="text" name="titulo" class="form-control" value="<%= results.titulo %>" />
             </div>
@@ -51,8 +54,9 @@
             </div>
 
             <br>
-            <input class="btn btn-primary" id="button1" type="submit" name="btIncuirPub" value="Inserir" />
-            <a href="/" class="btn btn-outline-primary btn-sm">Voltar</a>
+            <input class="btn bg-info text-white submit" id="button1" type="submit" name="btIncuirPub"
+                value="Inserir" />
+            <a href="/" class="btn  text-light">Voltar</a>
     </div>
     </form>
     </div>
@@ -65,5 +69,20 @@
         function mostrarFormularioMusica() {
             document.getElementById('albumForm').style.display = 'none';
             document.getElementById('addForm').style.display = 'block';
+        }
+
+        function toggleNomeArtista() {
+            var select = document.getElementById("artista");
+            console.log("Artista no inserir.ejs: ", select);
+            var nomeArtistaLabel = document.getElementById("nomeArtistaLabel");
+            var nomeArtistaInput = document.getElementById("nomeArtista");
+
+            if (select.value === "novoArtista") {
+                nomeArtistaLabel.style.display = "block";
+                nomeArtistaInput.style.display = "block";
+            } else {
+                nomeArtistaLabel.style.display = "none";
+                nomeArtistaInput.style.display = "none";
+            }
         }
     </script>
