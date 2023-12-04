@@ -59,14 +59,14 @@ app.get('/inserir', (req, res) => {
   const ref_artista = "SELECT * FROM artista ORDER BY id_artista DESC limit 1";
   mysql.query(ref_artista, [], function(err, IdArtista){
   FK_artista = IdArtista[0].id_artista;
-  console.log("artista", FK_artista);
+  console.log("ultimo id_artista: ", FK_artista);
 
 
   //Inserir Album
   const insert_album = "INSERT INTO album (titulo_album, ano_lancamento, id_artista) VALUES (?, ?, ?)";
   const dadosAlbum = [req.body.titulo_album, req.body.ano_lancamento, FK_artista];
   //testando se possui valor titulo_album
-  console.log(req.body.titulo_album);
+  console.log("Album: ", req.body.titulo_album);
 
   mysql.query(insert_album, dadosAlbum, function(err) {});
   });
@@ -77,7 +77,7 @@ app.get('/inserir', (req, res) => {
   const ref_album = "SELECT * FROM album ORDER BY id_album DESC limit 1";
   mysql.query(ref_album, [], function(err, IdAlbum){
   FK_album = IdAlbum[0].id_album;
-  console.log(FK_album);
+  console.log("ultimo id_album: ",FK_album);
 
 
     //Inserir MÚSICA
