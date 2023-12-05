@@ -9,54 +9,48 @@
     <div class=" container mt-3 " style="width: 28rem;">
         <h1>Adicionar Conteúdo</h1>
 
-            <form action="/inserir" method="post" class="forms-card" id="albumForm">
-                <div class="card-body">
-                    <label for="">Selecione um artista:</label>
-                    <select class="form-control" id="artista" name="id_artista" onchange="toggleNomeArtista()">
-                        <option value="" selected disabled hidden>Escolha um artista</option>
-                        <% for(var i=0; i < results.length; i++) { %>
-                            <option value="<%= results[i].id_artista %>">
-                                <%= results[i].nome %>
-                            </option>
-                            <% } %>
-                                <option value="novoArtista">Outro</option>
-                    </select>
-                    <!-- Campo para digitar OUTRO ARTISTA -->
-                    <label for="nomeArtista" id="nomeArtistaLabel" style="display:none;">Nome do Artista:</label>
-                    <input type="text" name="nome" id="nomeArtista" class="nome-artista form-control"
-                        style="display:none;" required>
-                    <br />
+        <form action="/inserir" method="post" class="forms-card" id="albumForm">
+            <div class="card-body">
+                <label for="">Informe o artista:</label>
+                <label for="nomeArtista" style="display:none;">Nome do Artista:</label>
+                <input type="text" name="nome" class="nome-artista form-control" required>
 
-                    <label for="">Informe o álbum:</label>
-                    <input type="text" class="form-control"name="titulo_album"
-                        value="<%= results.titulo_album %>" required />
+                <br />
 
-                    <br />
-                    <button class="btn bg-info text-white submit" id="button1" type="submit"
-                        onclick="mostrarFormularioMusica()">
-                        Salvar Álbum</button>
-                    <a href="/" class="btn  text-light">Voltar</a>
 
-                </div>
-            </form>
+                <label for="">Informe o álbum:</label>
+                <input type="text" class="form-control" name="titulo_album" value="<%= results.titulo_album %>"
+                    required />
+
+                <br />
+                <button class="btn bg-info text-white submit" id="button1" type="submit"
+                    onclick="mostrarFormularioMusica()">
+                    Salvar Álbum</button>
+                <a href="/" class="btn  text-light">Voltar</a>
+
+            </div>
+        </form>
     </div>
 
     <!-- Formulário de música (inicialmente escondido) -->
-    <div id="addForm" style="display:none;" class=" container mt-3 " style="width: 28rem;">
-        <form action="inserir" method="post" class="forms-card">
+    <div id="addForm" style="display:none;" class=" container mt-3 ">
+        <form action="inserir" method="post" class="forms-card mx-auto" style="width: 28rem;">
             <div class="card-body">
-                <label for="">Musica</label>
-                <input type="text" name="titulo" class="form-control" value="<%= results.titulo %>" />
-            </div>
-            <div class="form-group">
-                <label for="">Ano de Lançamento</label>
-                <input type="text" name="ano_lancamento" class="form-control" value="<%= results.ano_lancamento %>" />
-            </div>
+                <div class="form-group">
+                    <label for="">Musica</label>
+                    <input type="text" name="titulo" class="form-control" value="<%= results.titulo %>" />
+                </div>
+                <div class="form-group">
+                    <label for="">Ano de Lançamento</label>
+                    <input type="text" name="ano_lancamento" class="form-control"
+                        value="<%= results.ano_lancamento %>" >
+                </div>
 
-            <br>
-            <input class="btn bg-info text-white submit" id="button1" type="submit" name="btIncuirPub"
-                value="Inserir" />
-            <a href="/" class="btn  text-light">Voltar</a>
+                <br>
+                <input class="btn bg-info text-white submit" id="button1" type="submit" name=""
+                    value="Inserir" />
+                <a href="/" class="btn  text-light">Voltar</a>
+            </div>
     </div>
     </form>
     </div>
@@ -71,18 +65,4 @@
             document.getElementById('addForm').style.display = 'block';
         }
 
-        function toggleNomeArtista() {
-            var select = document.getElementById("artista");
-            console.log("Artista no inserir.ejs: ", select);
-            var nomeArtistaLabel = document.getElementById("nomeArtistaLabel");
-            var nomeArtistaInput = document.getElementById("nomeArtista");
-
-            if (select.value === "novoArtista") {
-                nomeArtistaLabel.style.display = "block";
-                nomeArtistaInput.style.display = "block";
-            } else {
-                nomeArtistaLabel.style.display = "none";
-                nomeArtistaInput.style.display = "none";
-            }
-        }
     </script>

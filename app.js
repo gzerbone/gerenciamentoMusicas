@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   //Pondo informações do cards
   const query = 
   `
-  SELECT album.id_album ,musica.titulo, musica.id_musica, album.ano_lancamento, album.titulo_album, artista.nome , artista.id_artista
+  SELECT  musica.titulo, musica.id_musica, album.id_album , album.ano_lancamento, album.titulo_album, artista.nome , artista.id_artista
   FROM musica 
   INNER JOIN album ON musica.id_album = album.id_album
   INNER JOIN artista ON album.id_artista = artista.id_artista 
@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 
 // (2)GET /inserir
 app.get('/inserir', (req, res) => {
-  const query = 'SELECT id_artista, nome  FROM artista';
+  const query = 'SELECT artista.id_artista, artista.nome, album.ano_lancamento  FROM  artista, album';
 
   mysql.query(query, (err, results) => {
     if (err) {
@@ -66,9 +66,9 @@ app.get('/inserir', (req, res) => {
   const insert_album = "INSERT INTO album (titulo_album, ano_lancamento, id_artista) VALUES (?, ?, ?)";
   const dadosAlbum = [req.body.titulo_album, req.body.ano_lancamento, FK_artista];
   //testando se possui valor titulo_album
-  console.log("Album: ", req.body.titulo_album);
-
+  
   mysql.query(insert_album, dadosAlbum, function(err) {});
+  console.log("ano lancamento: ", req.body.ano_lancamento);
   });
 
 
@@ -92,30 +92,6 @@ app.get('/inserir', (req, res) => {
   });
 });
 
-app.post('/salvar-album', (req, res) => {
-  if(req.body.titulo_album === 'novoArtista'){
-    const { titulo_album, ano_lancamento, id_artista } = req.body;
-
-    const query = 'INSERT INTO album (titulo_album, ano_lancamento, id_artista) VALUES (?, ?, ?)';
-    mysql.query(query, [titulo_album, ano_lancamento, id_artista], (err, result) => {
-      if (err) {
-        console.error('Erro ao inserir álbum no banco de dados:', err);
-      } else {
-        console.log('Álbum inserido com sucesso');
-      }
-    });}    
-    const { id_artista, titulo_album } = req.body;
-
-    const query = 'INSERT INTO album (titulo_album, id_artista) VALUES (?, ?)';
-    mysql.query(query, [titulo_album, id_artista], (err, result) => {
-      if (err) {
-        console.error('Erro ao inserir álbum no banco de dados:', err);
-      } else {
-        console.log('Álbum inserido com sucesso');
-      }
-      
-    });
-});
 
 /*******
   UPDATE
