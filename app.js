@@ -9,8 +9,21 @@ app.use(express.static('public'));
 
 
 app.get('/', (req, res) => {
-  // Consulta para obter os álbuns com menor e maior ano de lançamento
+  //Consulta para saber quantos albuns cada artista tem
+  const queryQuantidadeAlbum = `
+  SELECT
+    IFNULL(artista.nome, 'Total:') AS nome_artista,
+    COUNT(*) AS total_albuns
+  FROM
+    album
+  JOIN
+    artista ON album.id_artista = artista.id_artista
+  GROUP BY
+    nome_artista WITH ROLLUP
+    ORDER BY total_albuns desc;
 
+  `
+  // Consulta para obter os álbuns com menor e maior ano de lançamento
   const queryAlbumMenorAno = `
     SELECT
       musica.titulo,
@@ -44,7 +57,7 @@ app.get('/', (req, res) => {
   // Pondo informações do cards
   let orderBy = req.query.orderBy || 'titulo'; // padrão: ordenar por título
 
-  const query = `
+  const queryOrdenacao = `
     SELECT musica.titulo, musica.id_musica, album.id_album, album.ano_lancamento, album.titulo_album, artista.nome, artista.id_artista
     FROM musica 
     INNER JOIN album ON musica.id_album = album.id_album
@@ -52,7 +65,12 @@ app.get('/', (req, res) => {
     ORDER BY ${orderBy}
   `;
 
-
+    mysql.query(queryQuantidadeAlbum, (err, resultQuantidadeAlbum) => {
+      if (err) {
+        console.error('Erro ao obter quantidade de álbum de cada artista:', err);
+        res.send('Erro interno do servidor');
+        return;
+    }
 
     mysql.query(queryAlbumMenorAno, (err, resultAlbumMenorAno) => {
       if (err) {
@@ -68,7 +86,7 @@ app.get('/', (req, res) => {
           return;
         }
 
-        mysql.query(query, (err, resultCard) => {
+        mysql.query(queryOrdenacao, (err, resultCard) => {
           if (err) {
             console.error('Erro ao consultar o banco de dados:', err);
             res.send('Erro ao consultar o banco de dados');
@@ -77,6 +95,7 @@ app.get('/', (req, res) => {
 
           res.render('index', {
             resultCard,
+            resultQuantidadeAlbum,
             orderBy,
             resultAlbumMenorAno,
             resultAlbumMaiorAno,
@@ -85,6 +104,7 @@ app.get('/', (req, res) => {
         });
       });
     });
+  });
   });
 
 // Rota para atualizar o status do toggle

@@ -164,7 +164,7 @@ hr{
 }
 
 .card {
-    background-image: linear-gradient(90deg in oklab, rgba(84, 147, 158, 0.404), rgba(126, 146, 202, 0.397));
+    background-color: #eef2f972;
 
     color: #000;
     box-shadow: -5px 5px 10px rgba(44, 44, 44, 0.2);

@@ -44,14 +44,13 @@
             <div class="d-flex justify-content-between mt-3">
                 <a href="/inserir" class="btn btn-outline-success ml-3 mb-4 text-capitalize">
                     <i class="fas fa-plus "></i> Adicionar
-
                 </a>
             </div>
             <!-- Lista de músicas cadastradas -->
             <div class="mt-5 text-center">
                 <h3 class=" ml-3 mb-4">Músicas Cadastradas</h3>
                 <!-- botão de álbum mais antigo -->
-                <button onclick="mostrarMenorAno()" class="btn btn-primary mb-4 mr-4 ">Álbum Mais Antigo</button>
+                <button onclick="toggleMostrarMenorAno()" class="btn btn-dark mb-4 mr-4 ">Álbum Mais Antigo</button>
                 <div class="card-deck" id="menor" style="display:none;">
                     <% for (let i=0; i < resultAlbumMenorAno.length; i++) { %>
                         <div class="col-md-4 mb-4">
@@ -74,7 +73,7 @@
 
 
                 <!-- Exibe o álbum com maior ano de lançamento -->
-                <button onclick="mostrarMaiorAno()" class="btn btn-primary mb-4">Álbum Mais novo</button>
+                <button onclick="toggleMostrarMaiorAno()" class="btn btn-dark mb-4 mr-4">Álbum Mais novo</button>
                 <div class="card-deck" id="maior" style="display:none;">
                     <% for (let i=0; i < resultAlbumMaiorAno.length; i++) { %>
                         <div class="col-md-4 mb-4">
@@ -95,17 +94,35 @@
                         <% } %>
                 </div>
 
-
-                <div class="card-deck mt-5" id="principal">
-                    <!-- Dropdown para ordenação -->
-                    <form method="get" class="container mb-3">
-                        <label for="orderBy">Ordenar por:</label>
-                        <select name="orderBy" id="orderBy" class="form-control" onchange="this.form.submit()">
-                            <option value="titulo" <%=orderBy==='titulo' ? 'selected' : '' %>>Nome da Música</option>
-                            <option value="nome" <%=orderBy==='nome' ? 'selected' : '' %>>Nome do Artista</option>
-                            <!-- Adicione outras opções conforme necessário -->
-                        </select>
-                    </form>
+                <!-- Exibe quantos albuns cada artista possui -->
+                <button onclick="toggleQuantidadeAlbum()" class="btn btn-secondary mb-4">Quantidade de albuns</button>
+                <div class="card-deck container" id="quantidadeAlbum" style="display:none;">
+                    <div class="row">
+                        <% for (let i=0; i < resultQuantidadeAlbum.length; i++) { %>
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <%= (resultQuantidadeAlbum[i].nome_artista ?
+                                            resultQuantidadeAlbum[i].nome_artista : 'Total' ) %>: <%=
+                                                resultQuantidadeAlbum[i].total_albuns %>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="card-deck mt-5" id="principal">
+                <!-- Dropdown para ordenação -->
+                <form method="get" class="container mb-3">
+                    <label for="orderBy">Ordenar por:</label>
+                    <select name="orderBy" id="orderBy" class="form-control" onchange="this.form.submit()">
+                        <option value="titulo" <%=orderBy==='titulo' ? 'selected' : '' %>>Nome da Música</option>
+                        <option value="nome" <%=orderBy==='nome' ? 'selected' : '' %>>Nome do Artista</option>
+                        <!-- Adicione outras opções conforme necessário -->
+                    </select>
+                </form>
+                <div class="row">
                     <% for(var i=0; i < resultCard.length; i++) { %>
                         <div class="col-md-4 mb-4">
                             <div class="card">
@@ -145,6 +162,7 @@
                         </div>
                         <% } %>
                 </div>
+            </div>
 
 
     </body>
@@ -156,7 +174,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 
     <script>
-        function mostrarMenorAno() {
+        function toggleMostrarMenorAno() {
             var x = document.getElementById('menor');
             var main = document.getElementById('principal')
             if (x.style.display === 'none') {
@@ -169,7 +187,7 @@
 
             }
         }
-        function mostrarMaiorAno() {
+        function toggleMostrarMaiorAno() {
             var x = document.getElementById('maior');
             var main = document.getElementById('principal')
 
@@ -179,7 +197,22 @@
 
             } else {
                 x.style.display = 'none';
-                main.style.display = 'block'
+                main.style.display = 'inline'
+
+            }
+        }
+
+        function toggleQuantidadeAlbum() {
+            var x = document.getElementById('quantidadeAlbum');
+            var main = document.getElementById('principal')
+
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+                main.style.display = 'none'
+
+            } else {
+                x.style.display = 'none';
+                main.style.display = 'inline'
 
             }
         }
