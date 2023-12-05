@@ -1,6 +1,7 @@
 
 
 body{
+    box-sizing: border-box;
     background-image: url(/images/);
     background-repeat: no-repeat;
     background-size: cover;
@@ -88,7 +89,6 @@ hr{
 
 .custom-nav.stickyadd {
     background-color: #fff !important;
-    box-shadow: 0 1px 8px 3px rgba(0, 0, 0, 0.050980392156862744);
     padding: 15px 0px;
 }
 
@@ -98,13 +98,26 @@ hr{
 
 
 .bg-overlay {
-    background-color: #ffffff00;
+    display: flex;
+    align-items: center;
+    background-size: 250% 150%;
+    justify-content: center;
     position: absolute;
-    top: 0;
-    right: 0;
     width: 100%;
     height: 100%;
+    background-image: linear-gradient(45deg, #161A30,#31304D,#B6BBC4,#F0ECE5);
+    animation: colors, 5s, ease, infinite, alternate;
 }
+@keyframes colors {
+    0%{
+        background-position-x: 0%;
+    }
+    100%{
+        background-position-x: 100%;
+    }
+}
+
+
 .header-content {
     max-width: 800px;
 }
@@ -161,7 +174,7 @@ hr{
 
 @media (min-width: 200px) and (max-width: 768px) {
     .custom-nav {
-        background-color: #00000056 !important;
+        background-color: #dcdcdc56 !important;
         padding: 10px 0px !important;
     }
     .custom-nav .container {

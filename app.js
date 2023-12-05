@@ -9,22 +9,90 @@ app.use(express.static('public'));
 
 
 app.get('/', (req, res) => {
-  //Pondo informações do cards
-  const query = 
-  `
-  SELECT  musica.titulo, musica.id_musica, album.id_album , album.ano_lancamento, album.titulo_album, artista.nome , artista.id_artista
-  FROM musica 
-  INNER JOIN album ON musica.id_album = album.id_album
-  INNER JOIN artista ON album.id_artista = artista.id_artista 
+  // Consulta para obter os álbuns com menor e maior ano de lançamento
+
+  const queryAlbumMenorAno = `
+    SELECT
+      musica.titulo,
+      musica.id_musica,
+      album.id_album,
+      album.ano_lancamento,
+      album.titulo_album,
+      artista.nome,
+      artista.id_artista
+    FROM musica 
+    INNER JOIN album ON musica.id_album = album.id_album
+    INNER JOIN artista ON album.id_artista = artista.id_artista
+    WHERE album.ano_lancamento = (SELECT MIN(ano_lancamento) FROM album)
   `;
-  
-  mysql.query(query, (err, resultCard) => {
-    if (err) {      console.error('Erro ao consultar o banco de dados:', err);
-      res.send('Erro ao consultar o banco de dados');
-      return;
-    }
-  res.render('index', {resultCard});
+
+  const queryAlbumMaiorAno = `
+    SELECT
+      musica.titulo,
+      musica.id_musica,
+      album.id_album,
+      album.ano_lancamento,
+      album.titulo_album,
+      artista.nome,
+      artista.id_artista
+    FROM musica 
+    INNER JOIN album ON musica.id_album = album.id_album
+    INNER JOIN artista ON album.id_artista = artista.id_artista
+    WHERE album.ano_lancamento = (SELECT MAX(ano_lancamento) FROM album)
+  `;
+
+  // Pondo informações do cards
+  let orderBy = req.query.orderBy || 'titulo'; // padrão: ordenar por título
+
+  const query = `
+    SELECT musica.titulo, musica.id_musica, album.id_album, album.ano_lancamento, album.titulo_album, artista.nome, artista.id_artista
+    FROM musica 
+    INNER JOIN album ON musica.id_album = album.id_album
+    INNER JOIN artista ON album.id_artista = artista.id_artista
+    ORDER BY ${orderBy}
+  `;
+
+
+
+    mysql.query(queryAlbumMenorAno, (err, resultAlbumMenorAno) => {
+      if (err) {
+        console.error('Erro ao obter o álbum com menor ano de lançamento:', err);
+        res.send('Erro interno do servidor');
+        return;
+      }
+
+      mysql.query(queryAlbumMaiorAno, (err, resultAlbumMaiorAno) => {
+        if (err) {
+          console.error('Erro ao obter o álbum com maior ano de lançamento:', err);
+          res.send('Erro interno do servidor');
+          return;
+        }
+
+        mysql.query(query, (err, resultCard) => {
+          if (err) {
+            console.error('Erro ao consultar o banco de dados:', err);
+            res.send('Erro ao consultar o banco de dados');
+            return;
+          }
+
+          res.render('index', {
+            resultCard,
+            orderBy,
+            resultAlbumMenorAno,
+            resultAlbumMaiorAno,
+            toggleStatus: false ,
+          });
+        });
+      });
+    });
   });
+
+// Rota para atualizar o status do toggle
+app.post('/toggle', express.json(), (req, res) => {
+  const { toggleStatus } = req.body;
+  // Faça algo com o novo status do toggle (pode ser armazenado em um banco de dados, por exemplo)
+  console.log('Toggle status atualizado:', toggleStatus);
+  res.sendStatus(200);
 });
 
 /*******
