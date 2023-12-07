@@ -67,10 +67,6 @@ O Gerenciador de Músicas é um aplicativo web desenvolvido utilizando Node.js, 
 
 Contribuições são bem-vindas! Se você encontrar problemas ou quiser adicionar novos recursos, abra uma issue ou envie um pull request.
 
-## Licença
-
-Este projeto está licenciado sob a licença MIT - consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
-
 ---
 
 Aproveite o Gerenciador de Músicas para organizar suas preferências musicais de maneira simples e eficaz! 🎶✨
