@@ -50,7 +50,7 @@ O Gerenciador de Músicas é um aplicativo web desenvolvido utilizando Node.js, 
 
 3. Configure o banco de dados MySQL:
 
-   - Crie um banco de dados chamado `gerenciador_musicas`.
+   - Crie um banco de dados chamado `gerenciamento`.
    - Edite o arquivo `db.js` na raiz do projeto com as informações corretas de conexão ao seu banco de dados.
 
 4. Execute o aplicativo:
