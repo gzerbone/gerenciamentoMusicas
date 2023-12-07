@@ -105,18 +105,8 @@ hr{
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(45deg, #161A30,#31304D,#B6BBC4,#F0ECE5);
-    animation: colors, 5s, ease, infinite, alternate;
+    background-image: linear-gradient(45deg, #111426,#26253f,#B6BBC4,#F0ECE5);
 }
-@keyframes colors {
-    0%{
-        background-position-x: 0%;
-    }
-    100%{
-        background-position-x: 100%;
-    }
-}
-
 
 .header-content {
     max-width: 800px;

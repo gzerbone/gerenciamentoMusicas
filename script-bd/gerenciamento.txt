@@ -1,0 +1,120 @@
+CREATE DATABASE teste_gerenciamento;
+
+USE teste_gerenciamento;
+
+CREATE TABLE artista
+(
+	id_artista int unsigned not null auto_increment PRIMARY KEY,
+    nome varchar(60) not null
+);
+
+CREATE TABLE album
+(
+	id_album int unsigned not null auto_increment PRIMARY KEY,
+    titulo_album varchar(20) not null,
+    ano_lancamento YEAR,
+    id_artista int unsigned not null,
+    CONSTRAINT FK_artista FOREIGN KEY (id_artista) REFERENCES artista(id_artista)
+);
+CREATE TABLE musica
+(
+	id_musica int unsigned not null auto_increment PRIMARY KEY,
+    titulo varchar(25) not null,
+    id_album int unsigned not null,
+    CONSTRAINT FK_album FOREIGN KEY (id_album) REFERENCES album(id_album)
+);
+ALTER TABLE musica MODIFY COLUMN titulo varchar(80) not null;
+			-- INSERÇÕES --
+
+-- Inserção de artistas pop
+INSERT INTO artista (nome) VALUES
+('Taylor Swift'),
+('Ariana Grande'),
+('Ed Sheeran'),
+('Katy Perry'),
+('Beyoncé');
+
+-- Inserção de álbuns para os artistas de pop
+INSERT INTO album (titulo_album, ano_lancamento, id_artista)
+VALUES
+('1989', 2014, 1), -- Álbum de Taylor Swift
+('Dangerous Woman', 2016, 2), -- Álbum de Ariana Grande
+('÷', 2017, 3), -- Álbum de Ed Sheeran
+('Teenage Dream', 2010, 4), -- Álbum de Katy Perry
+('Lemonade', 2016, 5); -- Álbum de Beyoncé
+
+-- Inserção de músicas para os artistas de pop
+INSERT INTO musica (titulo, id_album)
+VALUES
+('Blank Space', 1), -- Música de Taylor Swift
+('Into You', 2), -- Música de Ariana Grande
+('Shape of You', 3), -- Música de Ed Sheeran
+('Firework', 4), -- Música de Katy Perry
+('Formation', 5); -- Música de Beyoncé
+
+
+-- Inserção de artistas country fictícios
+INSERT INTO artista (nome) VALUES
+('Johnny Cash'),
+('Dolly Parton'),
+('Willie Nelson'),
+('Shania Twain'),
+('Garth Brooks');
+
+-- Inserção de álbuns para os artistas de country
+INSERT INTO album (titulo_album, ano_lancamento, id_artista)
+VALUES
+('At Folsom Prison', 1968, 6), -- Álbum de Johnny Cash
+('Coat of Many Colors', 1971, 7), -- Álbum de Dolly Parton
+('Red Headed Stranger', 1975, 8), -- Álbum de Willie Nelson
+('Come On Over', 1997, 9), -- Álbum de Shania Twain
+('No Fences', 1990, 10); -- Álbum de Garth Brooks
+
+
+-- Inserção de músicas para os artistas de country
+INSERT INTO musica (titulo, id_album)
+VALUES
+('Ring of Fire', 6), -- Música de Johnny Cash
+('Jolene', 7), -- Música de Dolly Parton
+('Blue Eyes Crying in the Rain', 8), -- Música de Willie Nelson
+('Man! I Feel Like a Woman!', 9), -- Música de Shania Twain
+('Friends in Low Places', 10); -- Música de Garth Brooks
+
+-- Inserção de cantores de rap 
+INSERT INTO artista (nome) VALUES ('Eminem');
+
+-- Inserção de álbuns para os artistas de Rap
+INSERT INTO album (titulo_album, ano_lancamento, id_artista)
+VALUES
+('Recovery', 2010, 11); -- Álbum de Eminem
+
+-- Inserção de músicas de artistas de rap
+INSERT INTO musica (titulo, id_album)
+VALUES
+('Lose Yourself', 11); -- Música de Eminem
+
+
+-- Inserção de cantores de rock 
+INSERT INTO artista (nome) VALUES ('Led Zeppelin');
+INSERT INTO artista (nome) VALUES ('The Rolling Stones');
+
+-- Inserção de álbuns para o artista 'Led Zeppelin'
+INSERT INTO album (titulo_album, ano_lancamento, id_artista)
+VALUES
+('Led Zeppelin IV', 1971, 12), -- Álbum de Led Zeppelin
+('Sticky Fingers', 1971, 13); -- Álbum dos Rolling Stones
+
+-- Inserção de músicas de artistas de Rock
+INSERT INTO musica (titulo, id_album)
+VALUES
+('Black Dog', 13),
+('Sway', 13);
+
+-- Adicionando outro artista
+INSERT INTO artista (nome) VALUES ('Rihanna');
+
+-- Inserindo musica no album "1989" da cantora Taylor Swift
+INSERT INTO musica (titulo, id_album)
+VALUES
+('Clean', 1);
+

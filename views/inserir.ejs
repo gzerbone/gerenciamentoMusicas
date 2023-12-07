@@ -8,26 +8,18 @@
     </style>
     <div class=" container mt-3 " style="width: 28rem;">
         <h1>Adicionar Conteúdo</h1>
-
         <form action="/inserir" method="post" class="forms-card" id="albumForm">
             <div class="card-body">
                 <label for="">Informe o artista:</label>
-                <label for="nomeArtista" style="display:none;">Nome do Artista:</label>
-                <input type="text" name="nome" class="nome-artista form-control" required>
-
-                <br />
-
-
+                <input type="text" name="nome" class="nome-artista form-control" required
+                    value="<%= results.nome %>"><br />
                 <label for="">Informe o álbum:</label>
                 <input type="text" class="form-control" name="titulo_album" value="<%= results.titulo_album %>"
-                    required />
-
-                <br />
+                    required /><br />
                 <button class="btn bg-info text-white submit" id="button1" type="submit"
                     onclick="mostrarFormularioMusica()">
                     Salvar Álbum</button>
                 <a href="/" class="btn  text-light">Voltar</a>
-
             </div>
         </form>
     </div>
@@ -43,11 +35,9 @@
                 <div class="form-group">
                     <label for="">Ano de Lançamento</label>
                     <input type="text" name="ano_lancamento" class="form-control"
-                        value="<%= results.ano_lancamento %>" >
-                </div>
-
-                <br>
-                <input class="btn bg-info text-white submit" id="button1" type="submit" name=""
+                        value="<%= results.ano_lancamento %>" />
+                </div> <br>
+                <input class="btn bg-info text-white submit" id="button1" type="submit" name="btIncuirPub"
                     value="Inserir" />
                 <a href="/" class="btn  text-light">Voltar</a>
             </div>

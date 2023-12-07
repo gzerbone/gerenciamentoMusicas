@@ -18,28 +18,29 @@
         <div class=" container mt-3 " style="width: 28rem;">
             <h1>Editar Álbum</h1>
             <% for(var i=0; i < dados.length; i++) { %>
-
-                <form action="/editar-album/<%= dados[i].id_album %>" method="post" id="albumForm"
-                    class="forms-card">
+                <!-- Formulário para editar uma música -->
+                <form action="/editar-album/<%= dados[i].id_album %>" method="post" id="albumForm" class="forms-card">
                     <div class="card-body">
                         <label for="titulo_album">
                             <h2 class="card-title">
-                                <%= dados[i].titulo %>
+                                <%= dados[i].titulo.toUpperCase() %>
                             </h2>
                         </label>
-
                         <br>
                         <label for="titulo_album">Título do Álbum:</label>
-                        <input type="text" name="titulo_album" class="form-control" id="album"
-                            value="<%= dados[i].titulo_album %>" required>
+                        <input type="text" name="titulo_album" class="form-control" id="album" value="<%= dados[i].titulo_album %>" required>
                         <br>
                         <label for="ano_lancamento">Lançamento do Álbum:</label>
-                        <input type="text" name="ano_lancamento" class="form-control" id="album"
-                            value="<%= dados[i].ano_lancamento %>" required>
+                        <input type="text" name="ano_lancamento" class="form-control" id="album" value="<%= dados[i].ano_lancamento %>" required>
                         <br>
+                        <!-- Campo para selecionar um artista -->
                         <label for="artista">Selecione um artista:</label>
                         <select class="form-control" id="artista" name="id_artista">
-                            <option value="" selected disabled hidden>Escolha um artista</option>
+                            <!-- Opção pré-selecionada com o artista atual -->
+                            <option value="<%= dados[i].id_artista %>">
+                                <%= dados[i].nome %>
+                            </option>
+                            <!-- Loop para exibir todos os artistas disponíveis -->
                             <% for(var i=0; i < todosArtistas.length; i++) { %>
                                 <option value="<%= todosArtistas[i].id_artista %>">
                                     <%= todosArtistas[i].nome %>

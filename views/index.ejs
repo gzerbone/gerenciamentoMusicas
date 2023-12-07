@@ -52,19 +52,27 @@
                 <!-- botão de álbum mais antigo -->
                 <button onclick="toggleMostrarMenorAno()" class="btn btn-dark mb-4 mr-4 ">Álbum Mais Antigo</button>
                 <div class="card-deck" id="menor" style="display:none;">
+                    <!-- Loop para exibir álbuns -->
                     <% for (let i=0; i < resultAlbumMenorAno.length; i++) { %>
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <%= resultAlbumMenorAno[i].titulo_album %>
-                                    </h5>
-                                    <p class="card-text">Artista: <%= resultAlbumMenorAno[i].nome %>
-                                    </p>
-                                    <p class="card-text">Álbum: <%= resultAlbumMenorAno[i].titulo_album %>
-                                    </p>
-                                    <p class="card-text">Ano de Lançamento: <%= resultAlbumMenorAno[i].ano_lancamento %>
-                                    </p>
+                        <!-- Estrutura do card -->
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- Informações do álbum -->
+                                        <h5 class="card-title">
+                                            <%= resultAlbumMenorAno[i].titulo_album %>
+                                        </h5>
+                                        <p class="card-text">Artista:
+                                            <%= resultAlbumMenorAno[i].nome %>
+                                        </p>
+                                        <p class="card-text">Álbum:
+                                            <%= resultAlbumMenorAno[i].titulo_album %>
+                                        </p>
+                                        <p class="card-text">Ano de Lançamento: <%=
+                                                resultAlbumMenorAno[i].ano_lancamento %>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -74,20 +82,25 @@
 
                 <!-- Exibe o álbum com maior ano de lançamento -->
                 <button onclick="toggleMostrarMaiorAno()" class="btn btn-dark mb-4 mr-4">Álbum Mais novo</button>
+                <!-- Seção para exibir álbuns mais recentes -->
                 <div class="card-deck" id="maior" style="display:none;">
                     <% for (let i=0; i < resultAlbumMaiorAno.length; i++) { %>
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <%= resultAlbumMaiorAno[i].titulo %>
-                                    </h5>
-                                    <p class="card-text">Artista: <%= resultAlbumMaiorAno[i].nome %>
-                                    </p>
-                                    <p class="card-text">Álbum: <%= resultAlbumMaiorAno[i].titulo_album %>
-                                    </p>
-                                    <p class="card-text">Ano de Lançamento: <%= resultAlbumMaiorAno[i].ano_lancamento %>
-                                    </p>
+                        <!-- Estrutura do card -->
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= resultAlbumMaiorAno[i].titulo %>
+                                        </h5>
+                                        <p class="card-text">Artista: <%= resultAlbumMaiorAno[i].nome %>
+                                        </p>
+                                        <p class="card-text">Álbum: <%= resultAlbumMaiorAno[i].titulo_album %>
+                                        </p>
+                                        <p class="card-text">Ano de Lançamento: <%=
+                                                resultAlbumMaiorAno[i].ano_lancamento %>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -95,13 +108,17 @@
                 </div>
 
                 <!-- Exibe quantos albuns cada artista possui -->
-                <button onclick="toggleQuantidadeAlbum()" class="btn btn-secondary mb-4">Quantidade de albuns</button>
+                <button onclick="toggleQuantidadeAlbum()" class="btn btn-secondary mb-4 mr-4">Quantidade de
+                    albuns</button>
+                <!-- Seção para exibir a quantidade de álbuns -->
                 <div class="card-deck container" id="quantidadeAlbum" style="display:none;">
                     <div class="row">
+                        <!-- Loop para exibir a quantidade de álbuns -->
                         <% for (let i=0; i < resultQuantidadeAlbum.length; i++) { %>
                             <div class="col-md-4 mb-4">
                                 <div class="card">
                                     <div class="card-body">
+                                        <!-- Nome do artista ou "Total" se o campo nome_artista estiver NULL -->
                                         <%= (resultQuantidadeAlbum[i].nome_artista ?
                                             resultQuantidadeAlbum[i].nome_artista : 'Total' ) %>: <%=
                                                 resultQuantidadeAlbum[i].total_albuns %>
@@ -111,24 +128,60 @@
                             <% } %>
                     </div>
                 </div>
+
+                <!-- Exibe numero minimo de musicas de cada artista -->
+                <button onclick="toggleMinMusica()" class="btn btn-secondary mb-4">Quantidade Mínima de
+                    Músicas</button>
+                <!-- Seção para exibir o número mínimo de músicas -->
+                <div class="card-deck container" id="numMinMusica" style="display:none;">
+                    <div class="row d-flex justify-content-center">
+                        <!-- Formulário para pesquisar por número mínimo de músicas -->
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <form action="/" method="get" class="mb-3">
+                                        <!-- Campo de entrada para o número mínimo de músicas -->
+                                        <label for="numMinMusicas">Número Mínimo de Músicas:</label>
+                                        <input type="number" name="numMinMusicas" id="numMinMusicas" min="0"
+                                            value="<%= numMinMusicas %>" class="form-control" />
+                                        <button type="submit" class="btn btn-dark mt-3">Pesquisar</button>
+                                    </form>
+
+                                    <% if (resultMinMusicas.length> 0) { %>
+                                        <% resultMinMusicas.forEach(item=> { %>
+                                            <li style="list-style: none;">
+                                                <%= item.nome_artista %> - <%= item.total_musicas %> músicas
+                                            </li>
+                                            <% }); %>
+                                                <% } else { %>
+                                                    <p>Nenhum resultado encontrado.</p>
+                                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-deck mt-5" id="principal">
+
+
+            <!-- CARDS PRINCIPAIS -->
+            <div class="card-deck mt-5 " id="principal">
                 <!-- Dropdown para ordenação -->
                 <form method="get" class="container mb-3">
                     <label for="orderBy">Ordenar por:</label>
                     <select name="orderBy" id="orderBy" class="form-control" onchange="this.form.submit()">
                         <option value="titulo" <%=orderBy==='titulo' ? 'selected' : '' %>>Nome da Música</option>
                         <option value="nome" <%=orderBy==='nome' ? 'selected' : '' %>>Nome do Artista</option>
-                        <!-- Adicione outras opções conforme necessário -->
                     </select>
                 </form>
+                <!-- Loop para exibir cards principais -->
                 <div class="row">
                     <% for(var i=0; i < resultCard.length; i++) { %>
                         <div class="col-md-4 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">
-                                        <%= resultCard[i].titulo %>
+                                        <%= resultCard[i].titulo.toUpperCase() %>
                                     </h5>
                                     <p class="card-text">Artista: <%= resultCard[i].nome %>
                                     </p>
@@ -137,10 +190,8 @@
                                     <p class="card-text">Ano de Lançamento: <%= resultCard[i].ano_lancamento %>
                                     </p>
 
-                                    <!-- Botões de Editar e Excluir -->
+                                    <!-- Botões de Editar -->
                                     <div class="d-flex justify-content-center">
-
-                                        <!--Botão que precisa acessar o id do card que for clicado-->
                                         <form action="/editar-album/<%= resultCard[i].id_album %>" method="get"
                                             style="display:inline;" id="albumForm">
                                             <input type="hidden" name="id_album"
@@ -149,6 +200,7 @@
                                                 <i class=" fas fa-edit "></i> Editar
                                             </button>
                                         </form>
+                                    <!-- Botões de Excluir -->
                                         <form action=" /excluir-musica/<%=resultCard[i].id_musica %>" method="post"
                                                 style="display:inline;">
                                                 <button type="submit" class="btn btn-danger mt-3"
@@ -164,13 +216,14 @@
                 </div>
             </div>
 
-        </body>
+    </body>
     <!-- Bootstrap JS (opcional, para recursos interativos do Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
 
     <script>
+        // Funções para alternar a visibilidade de diferentes seções
         function toggleMostrarMenorAno() {
             var x = document.getElementById('menor');
             var main = document.getElementById('principal')
@@ -184,6 +237,7 @@
 
             }
         }
+        // Funções para alternar a visibilidade de diferentes seções
         function toggleMostrarMaiorAno() {
             var x = document.getElementById('maior');
             var main = document.getElementById('principal')
@@ -199,8 +253,24 @@
             }
         }
 
+        // Funções para alternar a visibilidade de diferentes seções
         function toggleQuantidadeAlbum() {
             var x = document.getElementById('quantidadeAlbum');
+            var main = document.getElementById('principal')
+
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+                main.style.display = 'none'
+
+            } else {
+                x.style.display = 'none';
+                main.style.display = 'inline'
+
+            }
+        }
+        // Funções para alternar a visibilidade de diferentes seções
+        function toggleMinMusica() {
+            var x = document.getElementById('numMinMusica');
             var main = document.getElementById('principal')
 
             if (x.style.display === 'none') {
