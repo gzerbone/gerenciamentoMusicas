@@ -1,6 +1,6 @@
 CREATE DATABASE teste_gerenciamento;
 
-USE teste_gerenciamento;
+USE gerenciamento;
 
 CREATE TABLE artista
 (
