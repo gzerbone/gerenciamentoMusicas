@@ -14,6 +14,7 @@ O Gerenciador de Músicas é um aplicativo web desenvolvido utilizando Node.js, 
 
 - `Ordenação:` Ordene suas músicas por nome, álbum ou artista para facilitar a busca e organização.
 
+
 ## Tecnologias Utilizadas
 
 - `Node.js:` Plataforma de execução de código JavaScript do lado do servidor.
