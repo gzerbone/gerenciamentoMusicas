@@ -8,6 +8,30 @@ Este diretório contém o script SQL para criação do banco de dados utilizado 
 
 2. **Conexão MYSQL:** Certifique-se de que o seu aplicativo Node.js está configurado para se conectar ao seu próprio servidor MySQL. Para isso, verifique as configurações de conexão SQL no arquivo `db.js` ou equivalente no seu projeto.
 
+   ```js
+   const mysql = require('mysql');
+	// Conectando com o BD
+	const conexao = mysql.createConnection({
+	    host: 'localhost',
+	    user: 'root',
+	    password: '',
+	    database: 'gerenciamento',
+	  });
+	  
+	  
+	  // Verificação do BD
+	  conexao.connect((err) => {
+	    if (err) {
+	      console.error('Erro ao conectar ao banco de dados: ' + err.message);
+	    } else {
+	      console.log('Conexão bem-sucedida ao banco de dados');
+	    }
+	  });
+	  module.exports = conexao;
+
+   ```
+   `DICA:` Se necessário, altere a porta para alguma disponível na sua máquina.
+
 3. **Executando o Script:**
    - Abra o seu cliente MySQL ou ferramenta de administração preferida.
    - Execute o conteúdo do arquivo `gerenciamento.txt` para criar a sua própria estrutura do banco de dados.
